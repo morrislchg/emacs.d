@@ -62,7 +62,6 @@
 
 
 
-(require-package 'goto-gem)
 
 
 (require-package 'bundler)
