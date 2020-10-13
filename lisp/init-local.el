@@ -30,4 +30,40 @@
 (prefer-coding-system 'utf-8-dos)
 (prefer-coding-system 'utf-8-unix)
 ;; 编码设置 end
+;;;开启动态语言shell
+(defun python-shell()
+  "make a python shell"
+  (interactive)
+  (switch-to-buffer (make-comint "python" "python" nil "-i")))
+(defun groovy-shell()
+  "make a groovy shell"
+  (interactive)
+  (switch-to-buffer (make-comint "groovy" "groovysh" nil)))
+(defun perl-shell()
+  "make a perl db shell"
+  (interactive)
+  (switch-to-buffer (make-comint "perl" "perl" nil "-d -e''")))
+(require 'ruby-mode)
+(require 'inf-ruby)
+;;;mate+o执行正在编辑的perl脚本
+(defun runperl()
+  "run perl,执行当前缓冲区的Perl程序"
+  (interactive)
+  ;(save-buffer)
+  (let ((filename buffer-file-name)
+ (cmd "")
+ (oldbuf (current-buffer))
+ (end (point-max)))
+    (if filename
+ (save-buffer)
+      (save-excursion
+ (setq filename (concat (getenv "tmp") "/temp.pl"))
+ (set-buffer (create-file-buffer filename))
+ (insert-buffer-substring oldbuf 1 end)
+ (write-file filename)
+ (kill-buffer (current-buffer))))
+    (setq cmd (concat "perl -w " filename))
+    (message "%s  ..." cmd)
+    (shell-command cmd)))
+(global-set-key[(meta o)] 'runperl) ;bind-key alt+o:runperl
 (provide 'init-local)
