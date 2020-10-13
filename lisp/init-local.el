@@ -2,33 +2,39 @@
                            ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 (custom-set-variables
  '(markdown-command "C:/Users/Administrator/AppData/Local/Pandoc/pandoc.exe"))
-;; 编码设置 begin
-;;(set-language-environment 'Chinese-GB)
+;;;; 设置编辑环境
+;; 设置为中文简体语言环境
+(set-language-environment 'Chinese-GB)
+;; 设置emacs 使用 utf-8
+(setq locale-coding-system 'utf-8)
+;; 设置键盘输入时的字符编码
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+;; 文件默认保存为 utf-8
+(set-buffer-file-coding-system 'utf-8)
+(set-default buffer-file-coding-system 'utf8)
+(set-default-coding-systems 'utf-8)
+;; 解决粘贴中文出现乱码的问题
+(set-clipboard-coding-system 'utf-8)
+;; 终端中文乱码
+(set-terminal-coding-system 'utf-8)
+(modify-coding-system-alist 'process "*" 'utf-8)
+(setq default-process-coding-system '(utf-8 . utf-8))
+;; 解决文件目录的中文名乱码
+(setq-default pathname-coding-system 'utf-8)
+(set-file-name-coding-system 'utf-8)
+;; 解决 Shell Mode(cmd) 下中文乱码问题
+(defun change-shell-mode-coding ()
 
-;; default-buffer-file-coding-system变量在emacs23.2之后已被废弃，使用buffer-file-coding-system代替
-(set-default buffer-file-coding-system 'utf-8-unix)
-(set-default-coding-systems 'utf-8-unix)
-(setq-default pathname-coding-system 'euc-cn)
-(setq file-name-coding-system 'euc-cn)
-
-;; 另外建议按下面的先后顺序来设置中文编码识别方式。
-;; 重要提示:写在最后一行的，实际上最优先使用; 最前面一行，反而放到最后才识别。
-;; utf-16le-with-signature 相当于 Windows 下的 Unicode 编码，这里也可写成
-;; utf-16 (utf-16 实际上还细分为 utf-16le, utf-16be, utf-16le-with-signature等多种)
-(prefer-coding-system 'cp950)
-(prefer-coding-system 'gb2312)
-(prefer-coding-system 'cp936)
-(prefer-coding-system 'gb18030)
-
-;(prefer-coding-system 'utf-16le-with-signature)
-(prefer-coding-system 'utf-16)
-
-;; 新建文件使用utf-8-unix方式
-;; 如果不写下面两句，只写
-;; (prefer-coding-system 'utf-8)
-;; 这一句的话，新建文件以utf-8编码，行末结束符平台相关
-(prefer-coding-system 'utf-8-dos)
-(prefer-coding-system 'utf-8-unix)
+  (progn
+    (set-terminal-coding-system 'gbk)
+    (set-keyboard-coding-system 'gbk)
+    (set-selection-coding-system 'gbk)
+    (set-buffer-file-coding-system 'gbk)
+    (set-file-name-coding-system 'gbk)
+    (modify-coding-system-alist 'process "*" 'gbk)
+    (set-buffer-process-coding-system 'gbk 'gbk)
+    (set-file-name-coding-system 'gbk)))
 ;; 编码设置 end
 ;;;开启动态语言shell
 (defun python-shell()
