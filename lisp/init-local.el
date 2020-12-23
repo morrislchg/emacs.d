@@ -72,4 +72,10 @@
     (message "%s  ..." cmd)
     (shell-command cmd)))
 (global-set-key[(meta o)] 'runperl) ;bind-key alt+o:runperl
+
+(set-terminal-coding-system 'utf-8)
+(modify-coding-system-alist 'process "*" 'utf-8)
+(setq default-process-coding-system '(utf-8 . utf-8))
+(with-eval-after-load 'eshell (set-language-environment "chinese-GB"))
+(setq inhibit-compacting-font-caches t)
 (provide 'init-local)
